@@ -20,7 +20,7 @@ import java.sql.Timestamp;
 public class Trade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tradeId;
     @Length(min = 0, max = 30)
     @NotBlank(message = "Account is mandatory")
