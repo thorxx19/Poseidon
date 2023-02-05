@@ -33,7 +33,7 @@ public class JwtUserDetails implements UserDetails {
 
     public static JwtUserDetails create(User profil){
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority("profil"));
+        authorityList.add(new SimpleGrantedAuthority("ROLE_"+profil.getRole()));
         return new JwtUserDetails(profil.getId(), profil.getUsername(), profil.getPassword(), authorityList);
     }
 

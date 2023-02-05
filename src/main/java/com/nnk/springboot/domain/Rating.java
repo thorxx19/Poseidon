@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
@@ -21,12 +22,16 @@ public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Length(min = 0, max = 125)
+    @NotBlank(message = "Moodys Rating is mandatory")
+    @Length(min = 1, max = 125)
     private String moodysRating;
-    @Length(min = 0, max = 125)
+    @NotBlank(message = "Sand Rating is mandatory")
+    @Length(min = 1, max = 125)
     private String sandPRating;
-    @Length(min = 0, max = 125)
+    @NotBlank(message = "Fitch Rating is mandatory")
+    @Length(min = 1, max = 125)
     private String fitchRating;
+    @DecimalMin(value = "0.0", inclusive = false)
     private Integer orderNumber;
 
 }

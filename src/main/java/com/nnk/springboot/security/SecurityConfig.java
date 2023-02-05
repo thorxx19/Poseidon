@@ -2,23 +2,28 @@ package com.nnk.springboot.security;
 
 
 
-import com.nnk.springboot.jwt.JwtAuthenticationEntryPoint;
-import com.nnk.springboot.jwt.JwtAuthenticationFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 
 @Configuration
@@ -27,7 +32,10 @@ import org.springframework.web.filter.CorsFilter;
 
 
     @Autowired
-    private JwtAuthenticationEntryPoint handler;
+    private UserDetailsService userDetailsService;
+
+
+
 
     private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
@@ -43,16 +51,13 @@ import org.springframework.web.filter.CorsFilter;
 
 
 
-    @Bean
-   public JwtAuthenticationFilter jwtAuthenticationFilter(){
-       return new JwtAuthenticationFilter();
-   }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public static PasswordEncoder passwordEncoder(){
        return new BCryptPasswordEncoder();
    }
 
@@ -75,26 +80,11 @@ import org.springframework.web.filter.CorsFilter;
    }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-
-       httpSecurity
-               .cors()
-               .and()
-               .csrf().disable()
-               .exceptionHandling().authenticationEntryPoint(handler).and()
-               .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-               .authorizeRequests()
-               .antMatchers("/actuator/**")
-               .permitAll()
-               .antMatchers(AUTH_WHITELIST)
-               .permitAll()
-               .antMatchers("/login").permitAll()
-               .antMatchers("/auth/**")
-               .permitAll()
-               .anyRequest().authenticated()
-               ;
-       httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-       return httpSecurity.build();
-   }
-
+    public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/user/**").hasRole("ADMIN")
+                .and().formLogin().and().oauth2Login().and().exceptionHandling().accessDeniedPage("/403")
+        ;
+        return http.build();
+    }
 }

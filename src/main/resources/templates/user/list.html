@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
@@ -9,11 +9,14 @@
 <body>
 <div class="container">
 	<div class="row">
-		<div class="col-6">
-
+		<div class="col-6 text-right">
+			Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
 		</div>
 		<div class="col-6 text-right">
-			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
+			<a href="/">Home</a>&nbsp;
+			|&nbsp;<a href="/login">Login</a>
+			| <a href="/bidList/list">List</a>
+			| <a href="/login?logout">Logout</a>
 		</div>
 	</div>
 	<div class="row"><h2>User List</h2></div>

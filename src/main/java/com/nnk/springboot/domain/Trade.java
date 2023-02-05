@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -22,12 +23,13 @@ public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tradeId;
-    @Length(min = 0, max = 30)
+    @Length(min = 1, max = 30)
     @NotBlank(message = "Account is mandatory")
     private String account;
-    @NotBlank(message = "Username is mandatory")
-    @Length(min = 0, max = 30)
+    @NotBlank(message = "Type is mandatory")
+    @Length(min = 1, max = 30)
     private String type;
+    @DecimalMin(value = "0.0", inclusive = false)
     private double buyQuantity;
     private double sellQuantity;
     private double buyPrice;
