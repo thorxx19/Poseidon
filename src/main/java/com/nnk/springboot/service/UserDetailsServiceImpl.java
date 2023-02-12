@@ -5,18 +5,14 @@ import com.nnk.springboot.domain.JwtUserDetails;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-
+/**
+ * @author froidefond
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -26,8 +22,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     /**
      * Method pour obtenir les détails de l'utilisateur
      *
-     * @param userName le mail du profil
-     * @return mail du profil
+     * @param userName le userName reçu du front
+     * @return un profil s'il existe sinon leve un exception
      * @throws UsernameNotFoundException exception
      */
     @Override

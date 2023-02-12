@@ -25,7 +25,9 @@ import org.springframework.web.filter.CorsFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-
+/**
+ * @author froidefond
+ */
 @Configuration
 @EnableWebSecurity
     public class SecurityConfig {
@@ -33,23 +35,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
     @Autowired
     private UserDetailsService userDetailsService;
-
-
-
-
-    private static final String[] AUTH_WHITELIST = {
-            // -- Swagger UI v2
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/swagger-ui/**"};
-
-
 
 
     @Bean
@@ -61,23 +46,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
        return new BCryptPasswordEncoder();
    }
 
-    @Bean
-    public CorsFilter corsFilter(){
-       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-       CorsConfiguration config = new CorsConfiguration();
-       config.setAllowCredentials(true);
-       config.addAllowedOrigin("http://localhost:3000/");
-       config.addAllowedHeader("*");
-       config.addAllowedMethod("OPTIONS");
-       config.addAllowedMethod("HEAD");
-       config.addAllowedMethod("GET");
-       config.addAllowedMethod("PUT");
-       config.addAllowedMethod("POST");
-       config.addAllowedMethod("DELETE");
-       config.addAllowedMethod("PATCH");
-       source.registerCorsConfiguration("/**",config);
-       return new CorsFilter(source);
-   }
 
     @Bean
     public SecurityFilterChain apiFilterChain(HttpSecurity http) throws Exception {

@@ -42,6 +42,9 @@ public class MyFilter implements Filter {
                 && !httpServletRequest.getServletPath().contains("actuator")
                 && !httpServletRequest.getServletPath().isBlank()
                 && !httpServletRequest.getServletPath().contains("favicon")
+                && !httpServletRequest.getServletPath().contains("/css/bootstrap.min.css")
+                && !httpServletRequest.getServletPath().contains("/")
+
         )
         {
             log.info("Protocol :{} Method :{} Server :{} Port:{} End point:{}", request.getProtocol(), httpServletRequest.getMethod()

@@ -19,6 +19,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author froidefond
+ */
 @Slf4j
 @Service
 public class HomeService {
@@ -26,9 +29,15 @@ public class HomeService {
     @Autowired
     private OAuth2AuthorizedClientService authorizedClientService;
 
-
+    /**
+     * Point d'entrée de l'applie
+     *
+     * @param user les information de l'utilisateur
+     * @return des information a la vue pour affichage
+     */
     public String home(Principal user) {
 
+        // connection avec mdp et userName
         if(user instanceof UsernamePasswordAuthenticationToken){
             JwtUserDetails profil = getUsernamePasswordLoginInfo(user);
             String autority = null;
@@ -38,6 +47,7 @@ public class HomeService {
                     break;
                 }
             }
+            // vérifie le role alouer a l'utilisateur
             if (autority != null && autority.equals("ROLE_ADMIN")) {
                 return "redirect:/user/list";
             }
@@ -45,8 +55,10 @@ public class HomeService {
                 return "redirect:/bidList/list";
             }
         }
+        // connection avec GitHub
         else if(user instanceof OAuth2AuthenticationToken){
             String role = getOauth2LoginInfo(user);
+            // vérifie le role alouer a l'utilisateur
             if (role != null && role.equals("ROLE_ADMIN")) {
                 return "redirect:/user/list";
             }
@@ -57,10 +69,22 @@ public class HomeService {
         return "home";
     }
 
+    /**
+     * point d'entrée pour les admin
+     *
+     * @param model object de type Model
+     * @return des information a la vue pour affichage
+     */
     public String adminHome(Model model) {
         return "redirect:/bidList/list";
     }
 
+    /**
+     * Method pour récup les info d'un utilisateur qui se connecte avec MDP et UserName
+     *
+     * @param user info reçu du front
+     * @return un object de type JwtUserDetails
+     */
     private JwtUserDetails getUsernamePasswordLoginInfo(Principal user)
     {
         JwtUserDetails u = null;
@@ -75,6 +99,12 @@ public class HomeService {
         return u;
     }
 
+    /**
+     * Method pour récup les info d'une personne qui se connecte avec github
+     *
+     * @param user info reçu du front
+     * @return le role de l'utilisateur
+     */
     private String getOauth2LoginInfo(Principal user){
 
         String roleRecup = null;
