@@ -1,8 +1,8 @@
 # spring-boot
 ## Technical:
 
-1. Framework: Spring Boot v2.0.4
-2. Java 8
+1. Framework: Spring Boot v2.7.8
+2. Java 11
 3. Thymeleaf
 4. Bootstrap v.4.3.1
 

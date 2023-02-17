@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +16,8 @@ public class User {
     @Length(min = 1, max = 125)
     private String username;
     @NotBlank(message = "Password is mandatory")
-    @Length(min = 1, max = 125)
+    @Length(min = 12, max = 125)
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", message = "Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial pour une longueur minimum de 12 caractères.")
     private String password;
     @NotBlank(message = "FullName is mandatory")
     @Length(min = 1, max = 125)

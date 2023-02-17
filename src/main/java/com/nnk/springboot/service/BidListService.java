@@ -77,7 +77,7 @@ public class BidListService {
      * @param model object de type Model
      * @return des information a la vue pour affichage
      */
-    public String updateBid(Integer id, @Valid BidList bidList, BindingResult result, Model model) {
+    public String updateBid(Integer id, BidList bidList, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "bidList/update";
         }
