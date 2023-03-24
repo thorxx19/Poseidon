@@ -1,23 +1,14 @@
 package com.nnk.springboot.service;
 
 import com.nnk.springboot.domain.JwtUserDetails;
-import com.nnk.springboot.domain.User;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
-import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
 import java.security.Principal;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author froidefond
@@ -26,8 +17,6 @@ import java.util.Map;
 @Service
 public class HomeService {
 
-    @Autowired
-    private OAuth2AuthorizedClientService authorizedClientService;
 
     /**
      * Point d'entrée de l'applie
@@ -47,7 +36,7 @@ public class HomeService {
                     break;
                 }
             }
-            // vérifie le role alouer a l'utilisateur
+            // vérifie le rôle alloué a l'utilisateur
             if (autority != null && autority.equals("ROLE_ADMIN")) {
                 return "redirect:/user/list";
             }
@@ -58,7 +47,7 @@ public class HomeService {
         // connection avec GitHub
         else if(user instanceof OAuth2AuthenticationToken){
             String role = getOauth2LoginInfo(user);
-            // vérifie le role alouer a l'utilisateur
+            // vérifie le rôle alloué a l'utilisateur
             if (role != null && role.equals("ROLE_ADMIN")) {
                 return "redirect:/user/list";
             }
@@ -70,22 +59,12 @@ public class HomeService {
     }
 
     /**
-     * point d'entrée pour les admin
-     *
-     * @param model object de type Model
-     * @return des information a la vue pour affichage
-     */
-    public String adminHome(Model model) {
-        return "redirect:/bidList/list";
-    }
-
-    /**
      * Method pour récup les info d'un utilisateur qui se connecte avec MDP et UserName
      *
      * @param user info reçu du front
      * @return un object de type JwtUserDetails
      */
-    private JwtUserDetails getUsernamePasswordLoginInfo(Principal user)
+    public JwtUserDetails getUsernamePasswordLoginInfo(Principal user)
     {
         JwtUserDetails u = null;
 
@@ -126,8 +105,4 @@ public class HomeService {
         }
         return roleRecup;
     }
-
-
-
-
 }

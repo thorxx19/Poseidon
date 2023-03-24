@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -94,7 +95,6 @@ public class RuleNameService {
      * @param model object de type Model
      * @return des information a la vue pour affichage
      */
-    @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(Integer id, Model model) {
         RuleName ruleName = ruleNameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
         ruleNameRepository.delete(ruleName);

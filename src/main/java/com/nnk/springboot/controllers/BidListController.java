@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,7 +25,7 @@ public class BidListController {
      * @param model object de type Model
      * @return des information a la vue pour affichage
      */
-    @RequestMapping("/bidList/list")
+    @GetMapping("/bidList/list")
     public String home(Model model) {
         return bidListService.home(model);
     }
@@ -90,7 +87,7 @@ public class BidListController {
      * @param model object de type Model
      * @return des information a la vue pour affichage
      */
-    @GetMapping("/bidList/delete/{id}")
+    @DeleteMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
         return bidListService.deleteBid(id,model);
     }

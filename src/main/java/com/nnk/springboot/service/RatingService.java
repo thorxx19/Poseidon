@@ -49,6 +49,7 @@ public class RatingService {
         if (!result.hasErrors()) {
             ratingRepository.save(rating);
             model.addAttribute("rating", ratingRepository.findAll());
+            return "redirect:/rating/list";
         }
         return "rating/add";
     }
