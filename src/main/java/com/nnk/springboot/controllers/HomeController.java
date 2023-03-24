@@ -29,7 +29,10 @@ public class HomeController {
 	 */
 	@RequestMapping("/")
 	public String home(Principal user) {
-		return homeService.home(user);
+		log.info("Requête pour /");
+		String response = homeService.home(user);
+		log.info("Réponse retournée pour / : {}", response);
+		return response;
 	}
 
 }

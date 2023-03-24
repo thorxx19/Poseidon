@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.service.BidListService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
  * @author froidefond
  */
 @Controller
+@Slf4j
 public class BidListController {
 
     @Autowired
@@ -38,7 +40,10 @@ public class BidListController {
      */
     @GetMapping("/bidList/add")
     public String addBidForm(BidList bid) {
-        return bidListService.addBidForm(bid);
+        log.info("Requête GET pour /bidList/list");
+        String response = bidListService.addBidForm(bid);
+        log.info("Réponse retournée pour /bidList/list : {}", response);
+        return response;
     }
 
     /**
@@ -51,7 +56,10 @@ public class BidListController {
      */
     @PostMapping("/bidList/validate")
     public String validate(@Valid BidList bid, BindingResult result, Model model) {
-        return bidListService.validate(bid,result,model);
+        log.info("Requête POST pour /bidList/validate");
+        String response = bidListService.validate(bid,result,model);
+        log.info("Réponse retournée pour /bidList/validate : {}", response);
+        return response;
     }
 
     /**
@@ -63,7 +71,10 @@ public class BidListController {
      */
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        return bidListService.showUpdateForm(id,model);
+        log.info("Requête GET pour /bidList/update/{id}");
+        String response = bidListService.showUpdateForm(id,model);
+        log.info("Réponse retournée pour /bidList/update/{id} : {}", response);
+        return response;
     }
 
     /**
@@ -77,7 +88,10 @@ public class BidListController {
      */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid BidList bidList, BindingResult result, Model model) {
-         return bidListService.updateBid(id,bidList,result,model);
+        log.info("Requête POST pour /bidList/update/{id}");
+        String response = bidListService.updateBid(id,bidList,result,model);
+        log.info("Réponse retournée pour /bidList/update/{id} : {}", response);
+        return response;
     }
 
     /**
@@ -89,6 +103,9 @@ public class BidListController {
      */
     @DeleteMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        return bidListService.deleteBid(id,model);
+        log.info("Requête DELETE pour /bidList/delete/{id}");
+        String response = bidListService.deleteBid(id,model);
+        log.info("Réponse retournée pour /bidList/delete/{id} : {}", response);
+        return response;
     }
 }

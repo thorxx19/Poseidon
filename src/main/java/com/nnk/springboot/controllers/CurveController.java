@@ -2,8 +2,10 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.service.CurveService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import javax.validation.Valid;
  * @author froidefond
  */
 @Controller
+@Slf4j
 public class CurveController {
     @Autowired
     private CurveService curveService;
@@ -24,9 +27,12 @@ public class CurveController {
      * @param model object de type Model
      * @return des information a la vue pour affichage
      */
-    @RequestMapping("/curvePoint/list")
+    @GetMapping("/curvePoint/list")
     public String home(Model model) {
-        return curveService.home(model);
+        log.info("Requête GET pour /curvePoint/list");
+        String response = curveService.home(model);
+        log.info("Réponse retournée pour /curvePoint/list : {}", response);
+        return response;
     }
 
     /**
@@ -37,7 +43,10 @@ public class CurveController {
      */
     @GetMapping("/curvePoint/add")
     public String addBidForm(CurvePoint curve) {
-        return curveService.addBidForm(curve);
+        log.info("Requête GET pour /curvePoint/add");
+        String response = curveService.addBidForm(curve);
+        log.info("Réponse retournée pour /curvePoint/add : {}", response);
+        return response;
     }
 
     /**
@@ -50,7 +59,10 @@ public class CurveController {
      */
     @PostMapping("/curvePoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        return curveService.validate(curvePoint,result,model);
+        log.info("Requête POST pour /curvePoint/validate");
+        String response = curveService.validate(curvePoint,result,model);
+        log.info("Réponse retournée pour /curvePoint/validate : {}", response);
+        return response;
     }
 
     /**
@@ -62,7 +74,10 @@ public class CurveController {
      */
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        return curveService.showUpdateForm(id,model);
+        log.info("Requête GET pour /curvePoint/update/{id}");
+        String response = curveService.showUpdateForm(id,model);
+        log.info("Réponse retournée pour /curvePoint/update/{id} : {}", response);
+        return response;
     }
 
     /**
@@ -76,7 +91,10 @@ public class CurveController {
      */
     @PostMapping("/curvePoint/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        return curveService.updateBid(id,curvePoint,result,model);
+        log.info("Requête POST pour /curvePoint/update/{id}");
+        String response = curveService.updateBid(id,curvePoint,result,model);
+        log.info("Réponse retournée pour /curvePoint/update/{id} : {}", response);
+        return response;
     }
 
     /**
@@ -88,6 +106,9 @@ public class CurveController {
      */
     @DeleteMapping("/curvePoint/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        return curveService.deleteBid(id,model);
+        log.info("Requête DELETE pour /curvePoint/delete/{id}");
+        String response = curveService.deleteBid(id,model);
+        log.info("Réponse retournée pour /curvePoint/delete/{id} : {}", response);
+        return response;
     }
 }

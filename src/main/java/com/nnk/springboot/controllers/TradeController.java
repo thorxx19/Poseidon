@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.service.TradeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
  * @author froidefond
  */
 @Controller
+@Slf4j
 public class TradeController {
     @Autowired
     private TradeService tradeService;
@@ -24,9 +26,12 @@ public class TradeController {
      * @param model object de type Model
      * @return des information a la vue pour affichage
      */
-    @RequestMapping("/trade/list")
+    @GetMapping("/trade/list")
     public String home(Model model) {
-        return tradeService.home(model);
+        log.info("Requête GET pour /trade/list");
+        String response = tradeService.home(model);
+        log.info("Réponse retournée pour /trade/list : {}", response);
+        return response;
     }
 
     /**
@@ -37,7 +42,10 @@ public class TradeController {
      */
     @GetMapping("/trade/add")
     public String addUser(Trade trade) {
-        return tradeService.addUser(trade);
+        log.info("Requête GET pour /trade/add");
+        String response = tradeService.addUser(trade);
+        log.info("Réponse retournée pour /trade/add : {}", response);
+        return response;
     }
 
     /**
@@ -50,7 +58,10 @@ public class TradeController {
      */
     @PostMapping("/trade/validate")
     public String validate(@Valid Trade trade, BindingResult result, Model model) {
-        return tradeService.validate(trade,result,model);
+        log.info("Requête POST pour /trade/validate");
+        String response = tradeService.validate(trade,result,model);
+        log.info("Réponse retournée pour /trade/validate : {}", response);
+        return response;
     }
 
     /**
@@ -62,7 +73,10 @@ public class TradeController {
      */
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        return tradeService.showUpdateForm(id,model);
+        log.info("Requête GET pour /trade/update/{id}");
+        String response = tradeService.showUpdateForm(id,model);
+        log.info("Réponse retournée pour /trade/update/{id} : {}", response);
+        return response;
     }
 
     /**
@@ -76,7 +90,10 @@ public class TradeController {
      */
     @PostMapping("/trade/update/{id}")
     public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) {
-        return tradeService.updateTrade(id,trade,result,model);
+        log.info("Requête POST pour /trade/update/{id}");
+        String response = tradeService.updateTrade(id,trade,result,model);
+        log.info("Réponse retournée pour /trade/update/{id} : {}", response);
+        return response;
     }
 
     /**
@@ -88,6 +105,9 @@ public class TradeController {
      */
     @DeleteMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-        return tradeService.deleteTrade(id,model);
+        log.info("Requête DELETE pour /trade/delete/{id}");
+        String response = tradeService.deleteTrade(id,model);
+        log.info("Réponse retournée pour /trade/delete/{id} : {}", response);
+        return response;
     }
 }
